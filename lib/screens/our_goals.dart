@@ -8,7 +8,7 @@ class OurGoalsPage extends StatelessWidget {
         title: Text('Our Goals'),
       ),
       body: Center(
-        child: Text('Here are our goals...', style: TextStyle(fontSize: 24)),
+        child: Text('our goals...', style: TextStyle(fontSize: 24)),
       ),
     );
   }

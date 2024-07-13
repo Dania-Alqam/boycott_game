@@ -1,11 +1,10 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:bycott_web/constants/colors.dart';
 import 'package:bycott_web/styles/buttons_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import '../constants/screen_constants.dart';
 import '../locale_provider.dart';
 import '../widgets/language.dart';
 
@@ -41,7 +40,26 @@ class _LandingPageState extends State<LandingPage> {
             child: Text(localizations.ourGoals,
                 style: const TextStyle(color: Colors.white)),
           ),
-          CustomDropDownWidget(provider: localeProvider),
+          Image.asset(
+            'assets/images/logo.png',
+            // height: 40,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  child: VerticalDivider(
+                    color: Colors.white,
+                    thickness: 0.5,
+                    width: 20,
+                  ),
+                ),
+                CustomDropDownWidget(provider: localeProvider),
+              ],
+            ),
+          ),
         ],
       ),
       extendBodyBehindAppBar: true, // Extend the body behind the AppBar
@@ -56,35 +74,42 @@ class _LandingPageState extends State<LandingPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              Text(localizations.boycottWithFun,
-                  style: titleTextStyle(fontSize: 75)),
+              Text(
+                localizations.boycottWithFun,
+                style: titleTextStyle(
+                  fontSize: isMobileScreen(context) ? 40 : 75,
+                ),
+              ),
               OutlinedButton(
                 onPressed: () {},
                 style: ButtonStyle(
                   side: WidgetStateProperty.resolveWith<BorderSide>(
                     (Set<WidgetState> states) {
                       if (states.contains(WidgetState.pressed)) {
-                        return BorderSide(
-                          color: Colors.blue.shade700,
+                        return const BorderSide(
+                          color: Colors.transparent,
                           width: 2,
                         );
                       }
-                      return const BorderSide(color: Colors.blue);
+                      return const BorderSide(color: borderColor);
                     },
                   ),
                   padding: WidgetStateProperty.all(
                       const EdgeInsets.symmetric(horizontal: 40, vertical: 20)),
-                  minimumSize: WidgetStateProperty.all(
-                      const Size(200, 60)), // Set minimum size
+                  minimumSize: isMobileScreen(context)
+                      ? WidgetStateProperty.all(const Size(50, 20))
+                      : WidgetStateProperty.all(
+                          const Size(200, 60)), // Set minimum size
                   shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0),
+                      borderRadius: BorderRadius.circular(3),
                     ),
                   ),
                 ),
                 child: Text(
                   localizations.startPlaying,
-                  style: const TextStyle(color: borderColor),
+                  style: const TextStyle(
+                      color: borderColor, fontWeight: FontWeight.bold),
                 ),
               ),
               Padding(
